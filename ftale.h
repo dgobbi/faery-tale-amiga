@@ -55,15 +55,15 @@
 
 struct shape {
 	unsigned short	abs_x, abs_y, rel_x, rel_y;
-	char	type;
+	BYTE	type;
 	UBYTE	race;
-	char	index,visible, 	/* image index and on-screen flag */
+	BYTE	index,visible, 	/* image index and on-screen flag */
 			weapon,			/* type of weapon carried */
 			environ,		/* environment variable */
 			goal,tactic,	/* current goal mode and means to carry it out */
 			state, facing;	/* current movement state and facing */
 	short	vitality;		/* also original object number */
-	char	vel_x,vel_y;	/* velocity for slippery areas */
+	BYTE	vel_x,vel_y;	/* velocity for slippery areas */
 /*	APTR	source_struct;	*/ /* address of generating structure */
 };
 
@@ -89,7 +89,7 @@ enum sequences {PHIL, OBJECTS, ENEMY, RAFT, SETFIG, CARRIER, DRAGON};
 
 struct object {				/* 250 objects, for a start */
 	unsigned short	xc, yc;
-	char	ob_id, ob_stat;
+	UBYTE   ob_id, ob_stat;
 };
 
 struct inv_item {

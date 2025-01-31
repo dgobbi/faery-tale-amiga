@@ -53,7 +53,7 @@ extern USHORT hero_x, hero_y, map_x, map_y;
 
 /* asm */
 
-char com2[9] = { 0,1,2,7,9,3,6,5,4 };
+BYTE com2[9] = { 0,1,2,7,9,3,6,5,4 };
 
 /*set_course(object,target_x,target_y,mode)
 	unsigned short object, target_x, target_y, mode;
@@ -225,7 +225,7 @@ _set_course
 /* a hit, a palpable hit! */
 #define FLEE		5	/* run directly away */
 
-extern char *stuff;
+extern UBYTE *stuff;
 
 dohit(i,j,fc,wt) short wt; register long j,i,fc;
 {	if (anim_list[0].weapon < 4 &&
@@ -248,7 +248,7 @@ dohit(i,j,fc,wt) short wt; register long j,i,fc;
 
 extern short nearest;
 extern short xtype;
-char	turtle_eggs;
+BYTE	turtle_eggs;
 
 aftermath()
 {	register long dead, flee, i, j;
@@ -294,7 +294,7 @@ proxcheck(x,y,i) short x,y,i;
 	return 0;
 }
 
-nearest_fig(constraint,dist) char constraint; short dist;
+nearest_fig(constraint,dist) BYTE constraint; short dist;
 {	register long d,i;
 	nearest = 0;
 	for (i=1; i<anix2; i++)
@@ -596,7 +596,7 @@ extern struct RastPort rp_map, rp_text;
 extern struct ViewPort vp_page, vp_text;
 extern struct BitMap *bm_draw;
 extern struct fpage *fp_drawing, *fp_viewing;
-extern char	viewstatus;
+extern BYTE	viewstatus;
 
 map_message()
 {	fade_down();
@@ -775,7 +775,7 @@ read_score()
 	}
 }
 
-char skipp;
+BYTE skipp;
 extern struct BitMap pagea, pageb;
 
 copypage(br1,br2,x,y) char *br1, *br2; short x,y;
@@ -789,9 +789,9 @@ copypage(br1,br2,x,y) char *br1, *br2; short x,y;
 	skipint();
 }
 
-char flip1[] = { 8,6,5,4,3,2,3,5,13,0,0, 13,5,3,2,3,4,5,6,8,0,0 };
-char flip2[] = { 7,5,4,3,2,1,1,1, 1,0,0,  1,1,1,1,2,3,4,5,7,0,0 };
-char flip3[] = {12,9,6,3,0,0,0,0, 0,0,0,  0,0,0,0,0,0,3,6,9,0,0 };
+BYTE flip1[] = { 8,6,5,4,3,2,3,5,13,0,0, 13,5,3,2,3,4,5,6,8,0,0 };
+BYTE flip2[] = { 7,5,4,3,2,1,1,1, 1,0,0,  1,1,1,1,2,3,4,5,7,0,0 };
+BYTE flip3[] = {12,9,6,3,0,0,0,0, 0,0,0,  0,0,0,0,0,0,3,6,9,0,0 };
 
 flipscan()
 {	short i, scol, h; register long bcol, dcol, rate, wide;
@@ -847,9 +847,9 @@ UBYTE *into_chip(oldpointer,size) register UBYTE *oldpointer; long size;
 	return newpointer;
 }
 
-char jtrans[] = { 0,3, 8,10, 11,15, 1,30, 2,45, 3,75, 13,20 };
+BYTE jtrans[] = { 0,3, 8,10, 11,15, 1,30, 2,45, 3,75, 13,20 };
 
-char treasure_probs[] = {
+BYTE treasure_probs[] = {
 	 0, 0, 0, 0, 0, 0, 0, 0,	/* no treasure */
 	 9,11,13,31,31,17,17,32,	/* stone,vial,totem,gold,keys */
 	 12,14,20,20,20,31,33,31,	/* keys,skull,gold,nothing */
@@ -857,7 +857,7 @@ char treasure_probs[] = {
 	 15,21,0,0,0,0,0,0			/* jade skull and white key */
 };
 
-char weapon_probs[] = {
+BYTE weapon_probs[] = {
 	0,0,0,0,	/* no weapons */
 	1,1,1,1,	/* dirks only */
 	1,2,1,2,	/* dirks and maces */
@@ -874,17 +874,17 @@ UBYTE fallstates[] = {
 	0x24,0x27,0x3c,0x6f,0x70,0x71,
 	0x37,0x38,0x3d,0x6f,0x70,0x71 };
 
-char bow_x[32] = {
+BYTE bow_x[32] = {
 	1,2,3,4,3,2,1,0, 3,2,0,-2,-3,-2,0,2,
 	-3,-3,-3,-3,-3,-3,-3,-2, 0,1,1,1,0,-2,-3,-2 };
-char bow_y[32] = { 
+BYTE bow_y[32] = { 
 	8,8,8,7,8,8,8,8, 11,12,13,13,13,13,13,12,
 	8,7,6,5,6,7,8,9, 12,12,12,12,12,12,11,12 };
 
 				  /*  0  1  2  3  4  5  6  7 */
-char bowshotx[8] = {  0, 0, 3, 6,-3,-3,-3,-6 };
-char bowshoty[8] = { -6,-6,-1, 0, 6, 8, 0,-1 };
-char gunshoty[8] = {  2, 0, 4, 7, 9, 4, 7, 8 };
+BYTE bowshotx[8] = {  0, 0, 3, 6,-3,-3,-3,-6 };
+BYTE bowshoty[8] = { -6,-6,-1, 0, 6, 8, 0,-1 };
+BYTE gunshoty[8] = {  2, 0, 4, 7, 9, 4, 7, 8 };
 
 BYTE witchpoints[] = {	/* 64 points - 256 entries */
 0,100,0,10, 	9,99,0,9, 		19,98,1,9,		29,95,2,9,
@@ -1213,11 +1213,11 @@ extern struct {
 } setfig_table[];
 
 extern UBYTE *nextshape;
-extern char witchflag;
+extern BYTE witchflag;
 
 set_objects(list,length,f) struct object *list; short length; long f;
 {	short xstart, ystart, i, k;
-	BYTE	cf, id;
+	UBYTE	cf, id;
 
 	db1 = length;
 	db2 = region_num;
@@ -1391,7 +1391,7 @@ BYTE	svflag;
 long	svfile, sverr;
 char	savename[] = "df1:A.faery";
 
-extern char endload[2];
+extern BYTE endload[2];
 
 extern struct in_work handler_data;
 extern struct  TextFont *tfont, *afont;
@@ -1450,7 +1450,7 @@ waitnewdisk()
 }
 
 extern short cheat1;
-extern char quitflag;
+extern BYTE quitflag;
 
 struct extent {
 	UWORD x1, y1, x2, y2;
@@ -1459,11 +1459,11 @@ struct extent {
 
 extern struct extent extent_list[1];
 extern short encounter_type;
-extern char encounter_number, actors_loading;
+extern BYTE encounter_number, actors_loading;
 extern short wt;
 
 extern struct encounter {
-	char	hitpoints,
+	BYTE	hitpoints,
 			agressive,
 			arms,
 			cleverness,

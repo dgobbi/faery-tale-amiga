@@ -43,7 +43,7 @@ struct seq_info seq_list[7];
 /* defines the variables for currently defined actors, on screen or off */
 
 struct encounter {
-	char	hitpoints,
+	BYTE	hitpoints,
 			agressive,
 			arms,
 			cleverness,
@@ -63,7 +63,7 @@ struct encounter {
 	{ 4,  NULL,0,0,0, 9 },	/* 10 - Woodcutter */
 };
 
-extern char treasure_probs[], weapon_probs[];
+extern BYTE treasure_probs[], weapon_probs[];
 
 #define MAXSHAPES	25
 
@@ -77,7 +77,7 @@ short mdex;
 
 struct missile {
 	unsigned short	abs_x, abs_y;
-	char	missile_type,	/* NULL, arrow, rock, 'thing', or fireball */
+	BYTE	missile_type,	/* NULL, arrow, rock, 'thing', or fireball */
 			time_of_flight, /* in frames? */
 			speed,			/* 0 = still unshot */
 			direction,
@@ -131,11 +131,11 @@ char	fiery_death;
 #define SHOOTFRUST	9	/* arrows not getting through */
 #define EGG_SEEK	10	/* snakes going for the eggs */
 
-extern char	turtle_eggs;
+extern BYTE	turtle_eggs;
 extern UBYTE fallstates[];
 
 struct transition
-{	char	newstate[4];		/* transition table */
+{	BYTE	newstate[4];		/* transition table */
 } trans_list[9] = {
 	{  1, 8, 0, 1 },			/* 0 - arm down, weapon low */
 	{  2, 0, 1, 0 },			/* 1 - arm down, weapon diagonal down */
@@ -148,7 +148,7 @@ struct transition
 	{  0, 6, 8, 2 }};			/* 8 - arm middle, weapon raise fwd */
 
 struct state {
-	char	figure,			/* figure # to use */
+	BYTE	figure,			/* figure # to use */
 			wpn_no,			/* weapon index to use */
 			wpn_x, wpn_y;	/* weapon x,y coord */
 } statelist[87] = {
@@ -203,7 +203,7 @@ struct state {
 	{ 66,10,5,11 }
 };
 
-extern char bow_x[], bow_y[], bowshotx[], bowshoty[], gunshoty[];
+extern BYTE bow_x[], bow_y[], bowshotx[], bowshoty[], gunshoty[];
 
 /* var1 is usually clock, var2 is usually direction */
 
@@ -234,8 +234,8 @@ struct door {				/* mark locations of all doors */
 	unsigned short
 		xc1, yc1,			/* outside image coords relative to F1 */
 		xc2, yc2;			/* inside image coords relative to F9 */
-	char type;				/* wood, stone */
-	char secs;				/* what sectors are joined by this */
+	BYTE type;				/* wood, stone */
+	BYTE secs;				/* what sectors are joined by this */
 } doorlist[DOORCOUNT] = {
 	{ 0x1170,0x5060, 0x2870,0x8b60, HWOOD,1 }, /* desert fort */
 	{ 0x1170,0x5060, 0x2870,0x8b60, HWOOD,1 }, /* desert fort */
@@ -506,8 +506,8 @@ char labelA[] = "Gold Book Writ Bone ";
 char labelB[] = "  A    B    C    D    E    F    G    H  ";
 /*               |    |    |    |    |    |    |    |    |    |    |    | */
 
-char keycolors[] = { 8,6,4,2,14,1 };
-char hitgo;		/* is the option we hit enabled */
+BYTE keycolors[] = { 8,6,4,2,14,1 };
+BYTE hitgo;		/* is the option we hit enabled */
 
 /* bit0 = selected, bit1 = displayed, else = type
 	4 = toggle, 8 = immediate, 12 = radio buttons, 0 = not changeable */
@@ -516,8 +516,8 @@ char real_options[12];
 
 struct menu {
 	char 	*label_list;
-	char	num, color;
-	char	enabled[12];
+	BYTE	num, color;
+	BYTE	enabled[12];
 } menus[10] = {
 	{ label2, 10,6, 3,2,2,2,2,10,10,10,10,10,0,0 },		/* items */
 	{ label6, 12,5, 2,3,2,2,2,8,8,8,8,8,8,8 },			/* magic */
@@ -580,15 +580,15 @@ USHORT	encounter_type;
 /* 28 */
 USHORT	pad1,pad2,pad3,pad4,pad5,pad6,pad7;
 
-char	viewstatus;				/* 0 = normal, 1 = big, 99 = corrupt */
-char	flasher;
-char	actors_on_screen;		/* is there anyone else on the screen?? */
-char	actors_loading;			/* currently attempting to load actors */
-char	safe_flag;				/* is this a safe area?? */
-char	battleflag;				/* are we in battle? */
-char	frustflag;				/* is the character blocked ?? */
-char	quitflag;				/* is it time to quit?? */
-char	witchflag, wdir;		/* is the witch on the screen */
+BYTE	viewstatus;				/* 0 = normal, 1 = big, 99 = corrupt */
+BYTE	flasher;
+BYTE	actors_on_screen;		/* is there anyone else on the screen?? */
+BYTE	actors_loading;			/* currently attempting to load actors */
+BYTE	safe_flag;				/* is this a safe area?? */
+BYTE	battleflag;				/* are we in battle? */
+BYTE	frustflag;				/* is the character blocked ?? */
+BYTE	quitflag;				/* is it time to quit?? */
+BYTE	witchflag, wdir;		/* is the witch on the screen */
 unsigned char goodfairy;		/* good fairy on screen? */
 extern short s1,s2;
 short	nearest;				/* nearest object/character to player */
@@ -1007,14 +1007,14 @@ close_all()
 
 short oldir = 9;
 short keydir = 0, keyfight;
-char diroffs[16] = {16,16,24,24,0,0,8,8,56,56,68,68,32,32,44,44};
+BYTE diroffs[16] = {16,16,24,24,0,0,8,8,56,56,68,68,32,32,44,44};
 
 /* music variables */
 unsigned char *(track[32]);
 unsigned char *(sample[6]);
 unsigned long sample_size[6];
 
-char pass, passmode;
+BYTE pass, passmode;
 
 extern long myfile, header, blocklength;
 
@@ -1043,8 +1043,8 @@ read_sample()
 
 /* subroutine for opening doors */
 
-extern char skipp;
-char bumped;
+extern BYTE skipp;
+BYTE bumped;
 enum ky {NOKEY=0, GOLD, GREEN, KBLUE, RED, GREY, WHITE};
 
 /* add more door types like gates, etc */
@@ -1467,7 +1467,7 @@ no_intro:
 		for (i=0; i<anix; i++)
 		{	short d, e, s, dex, nvx, nvy, nvx1, nvy1;
 			struct missile *ms;
-			char k;
+			BYTE k;
 
 			an = &(anim_list[i]);
 			if (freeze_timer && i > 0) goto statc; /* what about wizard? */
@@ -2005,7 +2005,7 @@ no_intro:
 		{	if (dif_y == 1)	{ scrollmap(6); } /* scroll up */
 			else if (dif_y == -1) { scrollmap(2); } /* scroll down */
 			else if (dif_y == 0)		/* no motion, delay here */
-			{	char battle2;
+			{	BYTE battle2;
 				ppick();
 
 				viewchange:
@@ -2144,7 +2144,7 @@ no_intro:
 					}
 					else if (an->state == SHOOT1) an->state = SHOOT3;
 					else if (mode <= ARCHER2) /* hostile character */
-					{	char thresh;
+					{	BYTE thresh;
 						if ((mode & 2) == 0) r = !rand4();
 						if (r)
 						{	if (an->race==4 && turtle_eggs) tactic = EGG_SEEK;
@@ -2804,7 +2804,7 @@ load_carrier(n) short n;
 /* this is the death routine for the main character */
 
 struct bro {
-	char	brave,luck,kind,wealth;
+	BYTE	brave,luck,kind,wealth;
 	UBYTE	*stuff;
 } blist[] = 
 {	{ 35,20,15,20,julstuff },	/* julian's attributes */
@@ -2901,7 +2901,7 @@ revive(new) short new;
 	an->vitality = (15+brave/4);
 	an->environ = 0;
 	an->state = STILL;
-	an->race = -1;
+	an->race = 0xff;
 	daynight = 8000; lightlevel = 300;
 	hunger = fatigue = 0;
 	anix = 3;
@@ -2933,7 +2933,7 @@ screen_size(x) register long x;
 	pagechange();
 }
 
-setmood(now) char now;
+setmood(now) BYTE now;
 {	register long off;
 	if (anim_list[0].vitality == 0) off = (6*4);
 	else if (hero_x > 0x2400 && hero_x < 0x3100 &&
@@ -3095,7 +3095,7 @@ long secx, secy;
 extern BYTE svflag;
 
 extern UBYTE itrans[];
-extern char jtrans[];
+extern BYTE jtrans[];
 
 LONG	dbg;
 
