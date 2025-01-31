@@ -17,4 +17,12 @@
 #include "devices/input.h"
 #include "devices/inputevent.h"
 #include "devices/trackdisk.h"
+#include "devices/audio.h"
+#include "workbench/startup.h"
+#ifdef __STDC__
+#include "clib/exec_protos.h"
+#include "clib/alib_protos.h"
+#include "clib/layers_protos.h"
+#include "clib/graphics_protos.h"
+#endif
 
