@@ -3618,11 +3618,101 @@ effect(num,speed) short num; long speed;
 	{	playsample(sample[num],sample_size[num]/2,speed); }
 }
 
+miscsave()
+{	/* save state */
+	unsigned short misc_info[40];
+	register unsigned short *ptr;
+	if (svflag)
+	{	ptr = misc_info;
+		*ptr++ = map_x;
+		*ptr++ = map_y;
+		*ptr++ = hero_x;
+		*ptr++ = hero_y;
+		*ptr++ = safe_x;
+		*ptr++ = safe_y;
+		*ptr++ = safe_r;
+		*ptr++ = img_x;
+		*ptr++ = img_y;
+		*ptr++ = cheat1;
+		*ptr++ = riding;
+		*ptr++ = flying;
+		*ptr++ = wcarry;
+		*ptr++ = turtleprox;
+		*ptr++ = raftprox;
+		*ptr++ = brave;
+		*ptr++ = luck;
+		*ptr++ = kind;
+		*ptr++ = wealth;
+		*ptr++ = hunger;
+		*ptr++ = fatigue;
+		*ptr++ = brother;
+		*ptr++ = princess;
+		*ptr++ = hero_sector;
+		*ptr++ = hero_place;
+		*ptr++ = daynight;
+		*ptr++ = lightlevel;
+		*ptr++ = actor_file;
+		*ptr++ = set_file;
+		*ptr++ = active_carrier;
+		*ptr++ = xtype;
+		*ptr++ = leader;
+		*ptr++ = secret_timer;
+		*ptr++ = light_timer;
+		*ptr++ = freeze_timer;
+		*ptr++ = cmode;
+		*ptr++ = encounter_type;
+		*ptr++ = 0;
+		*ptr++ = 0;
+		*ptr++ = 0;
+	}
+	saveload((void *)misc_info, 80);
+	if (!svflag)
+	{	ptr = misc_info;
+		map_x = *ptr++;
+		map_y = *ptr++;
+		hero_x = *ptr++;
+		hero_y = *ptr++;
+		safe_x = *ptr++;
+		safe_y = *ptr++;
+		safe_r = *ptr++;
+		img_x = *ptr++;
+		img_y = *ptr++;
+		cheat1 = *ptr++;
+		riding = *ptr++;
+		flying = *ptr++;
+		wcarry = *ptr++;
+		turtleprox = *ptr++;
+		raftprox = *ptr++;
+		brave = *ptr++;
+		luck = *ptr++;
+		kind = *ptr++;
+		wealth = *ptr++;
+		hunger = *ptr++;
+		fatigue = *ptr++;
+		brother = *ptr++;
+		princess = *ptr++;
+		hero_sector = *ptr++;
+		hero_place = *ptr++;
+		daynight = *ptr++;
+		lightlevel = *ptr++;
+		actor_file = *ptr++;
+		set_file = *ptr++;
+		active_carrier = *ptr++;
+		xtype = *ptr++;
+		leader = *ptr++;
+		secret_timer = *ptr++;
+		light_timer = *ptr++;
+		freeze_timer = *ptr++;
+		cmode = *ptr++;
+		encounter_type = *ptr++;
+	}
+}
+
 mod1save()
 {	/* save stuff */
-	saveload(julstuff,35);
-	saveload(philstuff,35);
-	saveload(kevstuff,35);
+	saveload((void *)julstuff,35);
+	saveload((void *)philstuff,35);
+	saveload((void *)kevstuff,35);
 	/* set stuff pointer */
 	stuff = blist[brother-1].stuff;
 
