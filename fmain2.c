@@ -40,7 +40,7 @@ l_shape		equ		22
 #endasm
 
 extern struct shape anim_list[20];
-extern short anix, anix2;
+extern short anix, anix2, mdex;
 
 extern USHORT hero_x, hero_y, map_x, map_y;
 
@@ -1504,13 +1504,15 @@ stest:
 	else svfile = Open(name,1005);
 	if (svfile)
 	{	/* save misc variables */
-		saveload((void *)&map_x,80);
+		miscsave();
 
 		/* save region num */
 		saveload((void *)&region_num,2);
 
 		/* save anim_list & length */
-		saveload((void *)&anix,6);
+		saveload((void *)&anix,2);
+		saveload((void *)&anix2,2);
+		saveload((void *)&mdex,2);
 		saveload((void *)anim_list,anix * (sizeof (struct shape)));
 
 		mod1save();
