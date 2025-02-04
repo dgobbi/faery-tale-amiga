@@ -455,7 +455,6 @@ SHORT j,k,n;
 
 extern struct ColorMap *GetColorMap();
 struct GfxBase *GfxBase;
-struct Library *LayersBase;
 
 UBYTE *nhinor, *nhivar;
 extern UBYTE hinor, hivar;
@@ -714,7 +713,6 @@ struct in_work handler_data;
 #define AL_TERR		0x4000
 
 struct BitMap *wb_bmap;
-struct Layer_Info *li, /* *NewLayerInfo() */ ;
 struct Process *thistask /* , *FindTask() */ ;
 BPTR origDir;
 int trapper();
@@ -732,13 +730,11 @@ open_all()
 	openflags = 0;
 
 	if ((GfxBase = (struct GfxBase *)OpenLibrary("graphics.library",0)) == NULL) return 2;
-	if ((LayersBase = OpenLibrary("layers.library",0)) == NULL) return 2;
 	SETFN(AL_GBASE);		/* opened the graphics library */
 	oldview = GfxBase->ActiView;
 
 	if (!MakeBitMap(&work_bm,2,640,200)) return 2;
 
-	li = NewLayerInfo();
 	InitRastPort(&rp_map);
 	InitRastPort(&rp_text);
 	InitRastPort(&rp_text2);
@@ -993,10 +989,9 @@ close_all()
 
 	FreeDiskIO();
 
-	if (TSTFN(AL_GBASE)) { CloseLibrary((struct Library *)GfxBase); CloseLibrary(LayersBase); }
+	if (TSTFN(AL_GBASE)) { CloseLibrary((struct Library *)GfxBase); }
 	if (TSTFN(AL_BMAP)) FreeMem(bm_page1,5*BM_SIZE);
 	if (TSTFN(AL_BMAP)) UnMakeBitMap(&work_bm);
-	DisposeLayerInfo(li);
 	FreeSprite(0);
 	openflags = 0;
 
