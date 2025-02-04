@@ -45,7 +45,7 @@ int AllocDiskIO()
 		SETFN(AL_PORT);
 		if ((diskreq1=(struct IOExtTD *)CreateExtIO(diskport,sizeof(struct IOExtTD)))==0) return 31;
 		SETFN(AL_IOREQ);
-		if (OpenDevice(TD_NAME,0,(struct IORequest *)diskreq1,0)) return 32;
+		if (OpenDevice((STRPTR)TD_NAME,0,(struct IORequest *)diskreq1,0)) return 32;
 		SETFN(AL_TDISK);
 		for (i=0; i<9; i++)
 		{	diskreqs[i] = *diskreq1;

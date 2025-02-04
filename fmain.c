@@ -646,7 +646,7 @@ extern short minimap[114];
 long	LoadSeg(), seg;
 struct	DiskFontHeader *font;
 struct  TextFont *tfont, *afont;
-struct  TextAttr topaz_ta = { "topaz.font", 8, 0, FPF_ROMFONT };
+struct  TextAttr topaz_ta = { (STRPTR)"topaz.font", 8, 0, FPF_ROMFONT };
 
 unsigned char 
 	*into_chip(),
@@ -729,7 +729,7 @@ open_all()
 
 	openflags = 0;
 
-	if ((GfxBase = (struct GfxBase *)OpenLibrary("graphics.library",0)) == NULL) return 2;
+	if ((GfxBase = (struct GfxBase *)OpenLibrary((STRPTR)"graphics.library",0)) == NULL) return 2;
 	SETFN(AL_GBASE);		/* opened the graphics library */
 	oldview = GfxBase->ActiView;
 
@@ -890,7 +890,7 @@ open_all()
 			ioaudio->ioa_Data = &data;
 			ioaudio->ioa_Length = 1;
 
-			if (!OpenDevice("audio.device", 0L, &ioaudio->ioa_Request,0L))
+			if (!OpenDevice((STRPTR)"audio.device", 0L, &ioaudio->ioa_Request,0L))
 			{
 				ioaudio->ioa_Request.io_Command = CMD_RESET;
 				ioaudio->ioa_Request.io_Flags = IOF_QUICK;
@@ -3021,7 +3021,7 @@ add_device()
 	handlerStuff.is_Code = (void (*)())HandlerInterface;
 	handlerStuff.is_Node.ln_Pri = 51;
 
-	error = OpenDevice("input.device",0,(struct IORequest *)inputRequestBlock,0);
+	error = OpenDevice((STRPTR)"input.device",0,(struct IORequest *)inputRequestBlock,0);
 	if (error) return FALSE;
 
 	inputRequestBlock->io_Command = IND_ADDHANDLER;
@@ -3057,7 +3057,7 @@ print_options()
 	{	if (j & 1) x = 482; else x = 430;
 		y = ((j/2) * 9) + 8;
 		Move(&rp_text2,x,y);
-		Text(&rp_text2,"      ",6);
+		Text(&rp_text2,(STRPTR)"      ",6);
 		real_options[j]=-1;
 	}
 }
@@ -3079,11 +3079,11 @@ propt(j,pena) short j,pena;
 	if (j & 1) x = 482; else x = 430;
 	y = ((j/2) * 9) + 8;
 	Move(&rp_text2,x,y);
-	Text(&rp_text2,"      ",6);
+	Text(&rp_text2,(STRPTR)"      ",6);
 	Move(&rp_text2,x+4,y);
-	if (cmode >= USE) Text(&rp_text2,menus[cmode].label_list+k,5);
-	else if (k<25) Text(&rp_text2,label1+k,5);
-	else Text(&rp_text2,menus[cmode].label_list+(k-25),5);
+	if (cmode >= USE) Text(&rp_text2,(STRPTR)(menus[cmode].label_list+k),5);
+	else if (k<25) Text(&rp_text2,(STRPTR)(label1+k),5);
+	else Text(&rp_text2,(STRPTR)(menus[cmode].label_list+(k-25)),5);
 }
 
 long secx, secy;
@@ -3313,7 +3313,7 @@ do_option(hit) short hit;
 			SetDrMd(&rp_map,JAM1);
 			SetAPen(&rp_map,31);
 			if (i > 0 && i < 320 && j > 0 && j <143)
-			{	Move(&rp_map,i,j); Text(&rp_map,"+",1); }
+			{	Move(&rp_map,i,j); Text(&rp_map,(STRPTR)"+",1); }
 			viewstatus = 1;
 			stillscreen();
 			prq(5);
