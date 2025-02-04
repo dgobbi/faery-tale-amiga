@@ -22,7 +22,6 @@
 #ifdef __STDC__
 #include "clib/exec_protos.h"
 #include "clib/alib_protos.h"
-#include "clib/layers_protos.h"
 #include "clib/graphics_protos.h"
 #endif
 

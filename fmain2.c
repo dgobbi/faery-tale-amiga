@@ -2,8 +2,6 @@
 #include "exec/memory.h"
 #include "graphics/gfxbase.h"
 #include "graphics/rastport.h"
-#include "graphics/clip.h"
-#include "graphics/layers.h"
 #include "graphics/view.h"
 #include "libraries/dos.h"
 #include "libraries/dosextens.h"
@@ -905,26 +903,90 @@ BYTE witchpoints[] = {	/* 64 points - 256 entries */
 -39,92,-4,9,	-30,95,-3,9,	-20,98,-2,9,	-10,99,-1,9,
 };
 
+short bounds[4] = { 0, 0, 319, 199 };
+short xstore[16]; /* storage for polygon clipping */
+short ystore[16]; /* storage for polygon clipping */
+
+short clip_beam(n) short n;
+{	short *xpoints = &xstore[0];
+	short *ypoints = &ystore[0];
+	short *xclipped = &xstore[8];
+	short *yclipped = &ystore[8];
+	short *tmppoints;
+	short b, dsign = 1;
+	short x0,y0,x1,y1,d0,d1;
+	char c0,c1;
+	char i,j,k;
+
+	for (k = 0; k < 4; k++)
+	{	b = bounds[k];
+
+		x1 = xpoints[n-1];
+		y1 = ypoints[n-1];
+		d1 = dsign*(x1 - b);
+		c1 = (d1 >= 0);
+
+		i = 0;
+		for (j = 0; j < n; j++)
+		{	x0 = x1;
+			y0 = y1;
+
+			x1 = xpoints[j];
+			y1 = ypoints[j];
+
+			d0 = d1;
+			d1 = dsign*(x1 - b);
+
+			c0 = c1;
+			c1 = (d1 >= 0);
+
+			if (c0 ^ c1)
+			{	/* push interpolated point */
+				xclipped[i] = b;
+				yclipped[i++] = y0 + d0*(y1 - y0)/(d0 - d1);
+			}
+			if (c1)
+			{	/* push pre-existing point */
+				xclipped[i] = x1;
+				yclipped[i++] = y1;
+			}
+		}
+		/* record the number of points post-clip */
+		n = i;
+
+		/* swap x and y, input and output*/
+		tmppoints = xpoints;
+		xpoints = yclipped;
+		yclipped = tmppoints;
+
+		tmppoints = ypoints;
+		ypoints = xclipped;
+		xclipped = tmppoints;
+
+		/* swap the sign of the check for upper bound */
+		if (k == 1) dsign = -1;
+	}
+
+	return n;
+}
+
 struct TmpRas mytmp, *InitTmpRas();
 struct AreaInfo myAreaInfo;
-WORD	areabuffer[20];
+WORD	areabuffer[24];
 PLANEPTR	myras, AllocRaster();
 
-struct Layer *layer, templayer, *oldlayer /*, *CreateUpfrontLayer() */ ;
-extern struct Layer_Info *li;
 SHORT	s1,s2;
 
 witch_fx(fp) register struct fpage *fp;
 {	UBYTE	w1; register BYTE *w;
 	register struct RastPort *r;
+	short	i, n;
 	SHORT	x1,y1,x2,y2,x3,y3,x4,y4;
 	SHORT	xh, yh, dx, dy, dx1, dy1;
 	xh = hero_x - (map_x & 0xfff0);
 	yh = hero_y - (map_y & 0xffe0);
 
-	layer = CreateUpfrontLayer(li,rp_map.BitMap,0,0,16*19,6*32,
-		LAYERSIMPLE,NULL);
-	r = &rp_map; oldlayer = r->Layer; r->Layer = layer;
+	r = &rp_map;
 
 	w1 = ((fp->witchdir+63) * 4); w = witchpoints + w1;
 	x1 = w[0] + fp->witchx; y1 = w[1] + fp->witchy;
@@ -951,17 +1013,24 @@ witch_fx(fp) register struct fpage *fp;
 		r->TmpRas = InitTmpRas(&mytmp,myras,RASSIZE(100,100));
 		InitArea(&myAreaInfo,areabuffer,9);
 		r->AreaInfo = &myAreaInfo;
-		AreaMove(r,x1,y1);
-		AreaDraw(r,x2,y2);
-		AreaDraw(r,x4,y4);
-		AreaDraw(r,x3,y3);
-		AreaEnd(r);
+
+		xstore[0] = x1; ystore[0] = y1;
+		xstore[1] = x2; ystore[1] = y2;
+		xstore[2] = x4; ystore[2] = y4;
+		xstore[3] = x3; ystore[3] = y3;
+
+		n = clip_beam(4);
+		if (n > 0)
+		{	AreaMove(r,xstore[0],ystore[0]);
+			for (i = 1; i < n; i++)
+			{	AreaDraw(r,xstore[i],ystore[i]); }
+			AreaEnd(r);
+		}
+
 		FreeRaster(myras,100,100);
 		r->TmpRas = oldtmp;
 		r->AreaInfo = oldarea;
 	}
-	r->Layer = oldlayer;
-	DeleteLayer(NULL,layer);
 }
 
 enum obytes {
