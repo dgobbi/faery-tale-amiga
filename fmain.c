@@ -1,5 +1,23 @@
 /* fmain.c - created Aug 86 by Talin - The Faerie Tale Adventure */
 
+#include "exec/types.h"
+#include "exec/memory.h"
+#include "exec/devices.h"
+#include "graphics/view.h"
+#include "hardware/custom.h"
+#include "graphics/gfxmacros.h"
+#include "graphics/copper.h"
+#include "graphics/display.h"
+#include "graphics/text.h"
+#include "graphics/gfxbase.h"
+#include "graphics/sprite.h"
+#include "libraries/diskfont.h"
+#include "libraries/dosextens.h"
+#include "devices/input.h"
+#include "devices/inputevent.h"
+#include "devices/audio.h"
+#include "workbench/startup.h"
+
 #include "ftale.h"
 
 /****** this section defines the variables used to communicate with the 
@@ -722,6 +740,17 @@ struct MsgPort *audioport;
 BOOL			audio_open;
 
 struct BitMap work_bm;
+
+APTR AllocMem();
+PLANEPTR AllocRaster();
+BPTR CurrentDir();
+BPTR Open();
+BYTE OpenDevice();
+struct Library *OpenLibrary();
+struct IORequest *CreateExtIO();
+struct MsgPort *CreatePort();
+struct TextFont *OpenFont();
+struct Task *FindTask();
 
 open_all()
 {	register long i;
