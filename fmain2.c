@@ -247,7 +247,7 @@ dohit(i,j,fc,wt) short wt; register long j,i,fc;
 }
 
 extern short nearest;
-extern short xtype;
+extern USHORT xtype;
 BYTE	turtle_eggs;
 
 aftermath()
@@ -1391,8 +1391,6 @@ BYTE	svflag;
 long	svfile, sverr;
 char	savename[] = "df1:A.faery";
 
-extern BYTE endload[2];
-
 extern struct in_work handler_data;
 extern struct  TextFont *tfont, *afont;
 /* struct FileLock *Lock(), *flock; */
@@ -1458,8 +1456,9 @@ struct extent {
 };
 
 extern struct extent extent_list[1];
-extern short encounter_type;
-extern BYTE encounter_number, actors_loading;
+extern USHORT encounter_type;
+extern unsigned char encounter_number;
+extern BYTE actors_loading;
 extern short wt;
 
 extern struct encounter {
@@ -1575,7 +1574,7 @@ short sun_colors[] = {
  0xFAA, 0xFAA, 0xF99, 0xF98, 0xF98, 0xF97, 0xF86, 0xF85,
  0xF84, 0xF84, 0xF93, 0xF92, 0x76F };
 
-extern short blackcolors[32];
+extern USHORT blackcolors[32];
 
 extern short princess;
 
@@ -1709,7 +1708,7 @@ eat(amt)
 
 short minimap[120];
 
-extern short encounter_x, encounter_y;
+extern unsigned short encounter_x, encounter_y;
 
 set_loc()
 {	register long d,j;

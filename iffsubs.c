@@ -69,12 +69,11 @@ ReadLength()
 	file_length = file_length - 4 - blocklength;
 } */
 
-extern char *GfxBase;
 char	*plane0, *plane1, *plane2, *plane3, *plane4;
 long	bytecount;
-char	*packdata;
+unsigned char	*packdata;
 extern struct ViewPort *vp;
-extern char *shape_mem;
+extern unsigned char *shape_mem;
 char	compress;
 
 /* char *AllocMem(); */
@@ -104,7 +103,7 @@ unpackpic(filename,bitmap) char *filename; struct BitMap *bitmap;
 		{	ReadLength(); Read(myfile,&grab,blocklength); }
 		else if (header == BODY)
 		{	int i;
-			char *membuffer;
+			unsigned char *membuffer;
 
 			bytecount = (bmhd.width+7)/8;
 			if (bytecount & 1) bytecount++;
