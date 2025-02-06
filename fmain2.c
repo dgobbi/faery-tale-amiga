@@ -754,6 +754,7 @@ load_next()
 }
 
 extern unsigned char *(track[32]), *scoremem;
+BPTR Open();
 
 read_score()
 {	long file;
@@ -833,7 +834,7 @@ flipscan()
 skipint()
 {	return skipp = (getkey()==' ');}
 
-/* UBYTE *AllocMem(); */
+APTR AllocMem();
 
 UBYTE *into_chip(oldpointer,size) register UBYTE *oldpointer; long size;
 {	register UBYTE *newpointer; register long i;
@@ -1465,6 +1466,7 @@ extern char endload[2];
 extern struct in_work handler_data;
 extern struct  TextFont *tfont, *afont;
 /* struct FileLock *Lock(), *flock; */
+BPTR Lock();
 BPTR flock;
 
 locktest(name,access) char *name; long access;

@@ -4,6 +4,7 @@
 #include "graphics/display.h"
 #include "graphics/gfxbase.h"
 #include "graphics/gfx.h"
+#include "hardware/blit.h"
 
 #define FORM	tags[0]
 #define ILBM	tags[1]
