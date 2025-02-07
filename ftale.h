@@ -1,9 +1,6 @@
 /* include file for faery tale adventures - by Talin */
 
 #include "exec/types.h"
-#include "fmain.p"
-#include "fmain2.p"
-#include "iffsubs.p"
 
 #define free_chip(new,old,size) if (new!=old) FreeMem(new,size);
 
