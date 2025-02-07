@@ -3345,6 +3345,7 @@ do_option(hit) short hit;
 				} else return;
 			}
 			else return;	/* didn't work so don't decrement use count */
+			break;
 		case 7:			/* HEAL */
 			anim_list[0].vitality += rand8()+4;
 			if (anim_list[0].vitality > (15+brave/4))
