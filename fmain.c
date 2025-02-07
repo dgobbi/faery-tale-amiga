@@ -1817,7 +1817,7 @@ no_intro:
 					}
 				}
 				else if (k==7 && an->vitality == 0)
-				{	an->state == STILL;
+				{	an->state = STILL;
 					dex = 1;
 				}
 			}
