@@ -429,6 +429,16 @@ _init_music
 			move.w	#150,tempo(a1)		; set initial tempo
 			move.b	#-1,nosound(a1)		; set no sound
 
+			move.l	#$dff000,a0	; pointer to sysregs
+			moveq	#3,d0		; voice counter
+initregs
+			move.l	wav_handle(a1),$a0(a0)	; initialize data
+			move.w	#1,$a4(a0)	; initialize length
+			move.w	#127,$a6(a0)	; initialize period
+			move.w	#0,$a8(a0)	; initialize volume
+			add.w	#16,a0		; next voice
+			dbra	d0,initregs
+
 			lea		server_node,a1
 			move.l	#0,0(a1)
 			move.l	#0,4(a1)
