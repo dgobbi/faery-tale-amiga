@@ -1024,9 +1024,7 @@ witch_fx(fp) register struct fpage *fp;
 		if (n > 0)
 		{	AreaMove(r,xstore[0],ystore[0]);
 			for (i = 1; i < n; i++)
-			{
-				AreaDraw(r,xstore[i],ystore[i]);
-			}
+			{	AreaDraw(r,xstore[i],ystore[i]); }
 			AreaEnd(r);
 		}
 
