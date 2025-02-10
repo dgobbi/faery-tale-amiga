@@ -3643,12 +3643,11 @@ effect(num,speed) short num; long speed;
 }
 
 miscsave()
-{ /* save state */
+{	/* save state */
 	unsigned short misc_info[40];
 	register unsigned short *ptr;
 	if (svflag)
-	{
-		ptr = misc_info;
+	{	ptr = misc_info;
 		*ptr++ = map_x;
 		*ptr++ = map_y;
 		*ptr++ = hero_x;
@@ -3692,8 +3691,7 @@ miscsave()
 	}
 	saveload((void *)misc_info, 80);
 	if (!svflag)
-	{
-		ptr = misc_info;
+	{	ptr = misc_info;
 		map_x = *ptr++;
 		map_y = *ptr++;
 		hero_x = *ptr++;
